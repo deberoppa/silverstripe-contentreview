@@ -16,7 +16,7 @@ Drop it into your installation folder, and refresh your database schema
 through `http://<your-host>/dev/build`.
 
 If you wish to have emails sent when a page comes up for review, you
-new to have the DailyTask cron job set up. See ScheduledTask.php
+need to have the DailyTask cron job set up. See ScheduledTask.php
 
 ## Usage
 
