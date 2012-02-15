@@ -46,7 +46,8 @@ class SiteTreeContentReview extends DataObjectDecorator implements PermissionPro
 					"Next review date (leave blank for no review)")),
 				new DropdownField("ReviewPeriodDays", _t("SiteTreeCMSWorkflow.REVIEWFREQUENCY",
 					"Review frequency (the review date will be set to this far in the future whenever the page is published.)"), array(
-					0 => "No automatic review date",
+					0 => "- Please choose -",
+					-1 => "No automatic review date",
 					1 => "1 day",
 					7 => "1 week",
 					30 => "1 month",
@@ -63,8 +64,18 @@ class SiteTreeContentReview extends DataObjectDecorator implements PermissionPro
 	}
 
 	function onBeforeWrite() {
-		if($this->owner->ReviewPeriodDays && !$this->owner->NextReviewDate) {
+		if($this->owner->ReviewPeriodDays > 0 && !$this->owner->NextReviewDate) {
 			$this->owner->NextReviewDate = date('Y-m-d', strtotime('+' . $this->owner->ReviewPeriodDays . ' days'));
+		} elseif ($this->owner->ReviewPeriodDays == 0 && !$this->owner->NextReviewDate) {
+			$this->owner->ReviewPeriodDays = 183;
+			$this->owner->NextReviewDate = date('Y-m-d', strtotime('+' . $this->owner->ReviewPeriodDays . ' days'));
+		} elseif ($this->owner->ReviewPeriodDays == 0 && $this->owner->NextReviewDate) {
+			$this->owner->ReviewPeriodDays = -1;
+		} elseif ($this->owner->ReviewPeriodDays > 0 && $this->owner->NextReviewDate <= date('Y-m-d')) {
+			$this->owner->NextReviewDate = date('Y-m-d', strtotime('+' . $this->owner->ReviewPeriodDays . ' days'));
+		}
+		if(!$this->owner->OwnerID){
+			$this->owner->OwnerID = Member::currentUser()->ID;
 		}
 		$this->owner->LastEditedByName=$this->owner->getEditorName();
 		$this->owner->OwnerNames = $this->owner->getOwnerName();
