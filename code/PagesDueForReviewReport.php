@@ -67,11 +67,25 @@ class PagesDueForReviewReport extends SS_Report {
 				'formatting' => '<a href=\"admin/show/$ID\" title=\"Edit page\">$value</a>'
 			),
 			'NextReviewDate' => array(
-				'title' => 'Review Date',
+				'title' => 'Review date',
 				'casting' => 'Date->Full'
 			),
+			'ReviewPeriodDays' => array(
+				'title' => _t('PagesDueForReviewReport.ColumnReviewPeriodDays', 'Review period (days)'),
+				'formatting' => '$value',
+				'csvFormatting' => '$value'
+			),
+			'ReviewNotes' => array(
+				'title' => _t('PagesDueForReviewReport.ColumnReviewNotes', 'Review notes'),
+				'formatting' => '$value',
+				'csvFormatting' => '$value'
+			),
 			'OwnerNames' => array(
-				'title' => 'Owner'
+				'title' => 'Content owner'
+			),
+			"LastEdited" => array(
+				"title" => 'Last edited',
+				'casting' => 'Date->Full'
 			),
 			'LastEditedByName' => 'Last edited by',
 			'AbsoluteLink' => array(
