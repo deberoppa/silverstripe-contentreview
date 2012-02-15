@@ -9,7 +9,9 @@
 					<td scope="row" colspan="2" class="typography">
 						<h2><% _t('ContentReviewEmails.EMAIL_HEADING','Page due for review') %></h2>
 						
-						<p>The page $Page.Title is due for review today by you</p>
+						<p>The "$Page.Title" page was last updated or created on the $LastEdited. You are listed as the owner of this page.<br />
+							Can you please review it to ensure the content is still relevant.</p>
+						<p>If no edits are required you will need to 'Edit' the page and 'Save and Publish' to reset the review period.</p>
 						
 						<h2>Actions</h2>
 						<ul>

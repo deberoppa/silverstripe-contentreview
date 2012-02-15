@@ -22,8 +22,9 @@ class ContentReviewEmails extends DailyTask {
 				if ($owner) {
 					$sender = Security::findAnAdministrator();
 					$recipient = $owner;
+					$lastEdited = date("d/m/Y", strtotime($page->LastEdited));
 
-					$subject = sprintf(_t('ContentReviewEmails.SUBJECT', 'Page %s due for content review'), $page->Title);
+					$subject = sprintf(_t('ContentReviewEmails.SUBJECT', 'Page "%s" due for content review'), $page->Title);
 
 					$email = new Email();
 					$email->setTo($recipient->Email);
@@ -35,6 +36,7 @@ class ContentReviewEmails extends DailyTask {
 						"Recipient" => $recipient,
 						"Sender" => $sender,
 						"Page" => $page,
+						"LastEdited" => $lastEdited,
 						"StageSiteLink"	=> Controller::join_links($page->Link(), "?stage=Stage"),
 						"LiveSiteLink"	=> Controller::join_links($page->Link(), "?stage=Live"),
 					));
